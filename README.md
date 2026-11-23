@@ -7,6 +7,16 @@ machine except in prompts to your own AI accounts.
 
 > Status: early public version (0.6). macOS and Linux are tested; Windows support is new, so please report issues.
 
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](#install) [![License](https://img.shields.io/github/license/SaiKiranKumarNalla/animus-jobs)](LICENSE) ![Local-first](https://img.shields.io/badge/data-local--first-success)
+
+![Discover: swipe through ranked opportunities](docs/img/discover.jpg)
+
+| Jobs and tracks | Application tracker |
+|---|---|
+| ![Jobs](docs/img/jobs.jpg) | ![Tracker](docs/img/tracker.jpg) |
+
+<p align="center"><i>Screenshots use the fictional demo data from <code>scripts/demo_seed.py</code>.</i></p>
+
 ## What it does
 - **Discover:** swipe through opportunities (→ save, ← dismiss, ↑ star, ↓ later). Every swipe trains your ranking.
 - **Field packs:** lanes, searches, companies and conferences for *your* field, generated from your CV or picked from
@@ -31,12 +41,12 @@ Requires **Python 3.10+**. Then install at least one AI command-line tool and lo
 
 **macOS / Linux**
 ```bash
-git clone https://github.com/<you>/animus-jobs && cd animus-jobs
+git clone https://github.com/SaiKiranKumarNalla/animus-jobs && cd animus-jobs
 ./scripts/install.sh
 ```
 **Windows (PowerShell)**
 ```powershell
-git clone https://github.com/<you>/animus-jobs; cd animus-jobs
+git clone https://github.com/SaiKiranKumarNalla/animus-jobs; cd animus-jobs
 powershell -ExecutionPolicy Bypass -File scripts\install.ps1
 ```
 Then open **http://127.0.0.1:8765** (or run `jobagent open`). The **setup wizard** walks you through:
@@ -47,6 +57,13 @@ Then open **http://127.0.0.1:8765** (or run `jobagent open`). The **setup wizard
 5. How applying should work: assisted, auto-send email applications, or (risky) full auto-apply
 
 Prefer the terminal? `jobagent setup`.
+
+## Try it with demo data
+No CV or API key needed: run the dashboard on a throwaway folder filled with fictional opportunities.
+```bash
+export JOBAGENT_HOME=/tmp/animus-demo
+python scripts/demo_seed.py && jobagent serve      # then open http://127.0.0.1:8765
+```
 
 ## Where your data lives
 `~/.jobagent` (Windows: `%APPDATA%\JobAgent`). Override it with `JOBAGENT_HOME`. It holds the SQLite database,
@@ -73,3 +90,10 @@ Field packs are plain JSON in `jobagent/packs/`; new packs for other fields are 
 
 ## License
 MIT. See [LICENSE](LICENSE).
+
+## Contact
+Built by **Sai Kiran Kumar Nalla, PhD** (medical imaging, physics-AI) · Toulouse, France ·
+[LinkedIn](https://www.linkedin.com/in/sai-kiran-kumar-nalla-3a325314a/) · [Portfolio](https://saikirankumarnalla.github.io) ·
+saikirankumarnalla@gmail.com
+
+Bugs and ideas: please open a [GitHub issue](https://github.com/SaiKiranKumarNalla/animus-jobs/issues).
