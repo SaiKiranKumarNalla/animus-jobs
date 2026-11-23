@@ -83,6 +83,9 @@ def start(job_id, mode=None, agent=None, to=None):
         raise ValueError("Upload your CV file (Resume tab) so it can be attached.")
     if not emailer.configured():
         raise ValueError("Connect your email first (Setup → Email).")
+    dup = db.one("SELECT id FROM apply_queue WHERE job_id=? AND status IN ('queued','sent')", (job_id,))
+    if dup:
+        return {**out, "queued": dup["id"], "note": "Already queued or sent for this job, so nothing new was queued."}
     subject, body, used = _letter(j, agent)
     qid = db.execute("INSERT INTO apply_queue (job_id,to_addr,subject,body,attachment,created) VALUES (?,?,?,?,?,?)",
                      (job_id, addr, subject, body, cv, time.time()))

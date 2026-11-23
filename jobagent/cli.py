@@ -91,6 +91,13 @@ def main(argv=None):
     apf.add_argument("--items", type=int, default=20)
     apf.add_argument("--cap", type=float, default=0.15, help="max USD per actor run")
     apf.add_argument("--agent", choices=["codex", "claude_cli"], default=None)
+    apl = sub.add_parser("apply", help="apply to a job using your apply mode (assisted / email_auto / web_assist)")
+    apl.add_argument("id"); apl.add_argument("--mode", choices=["assisted", "email_auto", "web_assist"])
+    apl.add_argument("--to", help="application email to use instead of the one in the posting")
+    apl.add_argument("--agent")
+    sub.add_parser("apply-queue", help="list queued/sent application emails")
+    sub.add_parser("apply-send", help="send queued application emails now (within the daily limit)")
+    apc = sub.add_parser("apply-cancel", help="cancel a queued application email"); apc.add_argument("qid", type=int)
     op = sub.add_parser("open", help="start the server if needed and open the dashboard")
     op.add_argument("--port", type=int, default=8765)
     args = p.parse_args(argv)
@@ -100,6 +107,18 @@ def main(argv=None):
         return _setup_wizard()
     if args.cmd == "open":
         return _open(args.port)
+    if args.cmd.startswith("apply"):
+        from . import apply
+        if args.cmd == "apply":
+            res = apply.start(args.id, args.mode, args.agent, args.to)
+        elif args.cmd == "apply-queue":
+            res = {"sent_today": apply.sent_today(), "queue": [{k: q[k] for k in ("id", "status", "to_addr", "subject", "title", "company", "error")} for q in apply.queue()]}
+        elif args.cmd == "apply-send":
+            res = apply.send_due()
+        else:
+            apply.cancel(args.qid); res = {"cancelled": args.qid}
+        print(json.dumps(res, indent=1, default=str))
+        return
     if args.cmd == "apify":
         from . import apify
         print(json.dumps(apify.scan(sources=tuple(args.sources or apify.ACTORS), queries=args.queries, items_per_run=args.items,
