@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JobAgent</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<style>
+:root{--bg:#f6f7fb;--panel:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#4f46e5;--accent-ink:#fff;
+--good:#047857;--warn:#b45309;--bad:#b91c1c;--chip:#eef2ff;--shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.04)}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1015;--panel:#161922;--ink:#e8eaf0;--muted:#9aa1ad;--line:#262a35;--accent:#818cf8;
+--accent-ink:#0e1015;--good:#34d399;--warn:#fbbf24;--bad:#f87171;--chip:#1f2340;--shadow:none}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+nav{background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;height:100vh}
+nav h1{font-size:18px;margin:0 8px 18px;display:flex;gap:8px;align-items:center}
+nav button{display:flex;width:100%;gap:10px;align-items:center;border:0;background:none;color:var(--ink);padding:9px 10px;border-radius:8px;cursor:pointer;font-size:14px;text-align:left}
+nav button:hover{background:var(--chip)}nav button.on{background:var(--accent);color:var(--accent-ink)}
+nav .foot{position:absolute;bottom:14px;left:12px;right:12px;font-size:12px;color:var(--muted)}
+main{padding:24px 28px;max-width:1200px;width:100%}
+h2{margin:0 0 4px;font-size:22px}.sub{color:var(--muted);margin:0 0 18px}
+.grid{display:grid;gap:14px}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+.stat b{font-size:26px;display:block}.stat span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:120px;resize:vertical}
+.btn{border:0;background:var(--accent);color:var(--accent-ink);padding:9px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}.btn:disabled{opacity:.5;cursor:wait}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.right{margin-left:auto}
+.chip{display:inline-block;background:var(--chip);border-radius:99px;padding:2px 9px;font-size:12px;margin:2px}
+.chip.miss{background:transparent;border:1px dashed var(--warn);color:var(--warn)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--bad)}.dot.on{background:var(--good)}
+.job{display:grid;grid-template-columns:56px 1fr auto;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.job:hover{background:var(--chip)}.score{font-weight:700;font-size:18px;text-align:center;border-radius:10px;padding:8px 0}
+.s-hi{background:rgba(4,120,87,.12);color:var(--good)}.s-md{background:rgba(180,83,9,.12);color:var(--warn)}.s-lo{background:var(--chip);color:var(--muted)}
+.job .t{font-weight:600}.job .m{color:var(--muted);font-size:13px}
+.md{line-height:1.6}.md h1,.md h2,.md h3{margin:.8em 0 .3em}.md table{border-collapse:collapse}.md td,.md th{border:1px solid var(--line);padding:4px 8px}
+.md pre{background:var(--bg);padding:10px;border-radius:8px;overflow:auto;white-space:pre-wrap}
+.out{margin-top:14px}.muted{color:var(--muted)}.small{font-size:12px}
+.check{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.log{font:12px ui-monospace,Menlo,monospace;background:var(--bg);border-radius:8px;padding:10px;max-height:260px;overflow:auto;white-space:pre-wrap}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow:auto;padding:4px}
+.msg{padding:10px 14px;border-radius:12px;max-width:85%}.msg.user{align-self:flex-end;background:var(--accent);color:var(--accent-ink)}
+.msg.assistant{background:var(--panel);border:1px solid var(--line)}
+.drawer{position:fixed;inset:0 0 0 auto;width:min(720px,100%);background:var(--panel);border-left:1px solid var(--line);padding:20px;overflow:auto;z-index:10;box-shadow:-10px 0 30px rgba(0,0,0,.15)}
+.hidden{display:none!important}.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:s 1s linear infinite;vertical-align:middle}
+@keyframes s{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:8px;z-index:20}
+@media (max-width:820px){.app{grid-template-columns:1fr}nav{position:static;height:auto;display:flex;flex-wrap:wrap;gap:4px}nav h1,nav .foot{display:none}
+nav button{width:auto}.g4,.g3,.g2{grid-template-columns:1fr 1fr}main{padding:16px}}
+</style>
+</head>
+<body>
+<div class="app">
+<nav id="nav">
+  <h1>🎯 JobAgent</h1>
+  <button data-v="home">🏠 Dashboard</button>
+  <button data-v="jobs">💼 Jobs</button>
+  <button data-v="resume">📄 Resume & ATS</button>
+  <button data-v="write">✉️ Letters & Emails</button>
+  <button data-v="skills">🧠 Skills & Training</button>
+  <button data-v="coach">💬 Career Coach</button>
+  <button data-v="agents">🤖 Agents Council</button>
+  <button data-v="docs">🗂 Documents</button>
+  <button data-v="settings">⚙️ Settings</button>
+  <div class="foot" id="foot"></div>
+</nav>
+<main id="main"></main>
+</div>
+<div id="drawer" class="drawer hidden"></div>
+<script>
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const md=t=>DOMPurify.sanitize(marked.parse(t||''));
+let S={}, view=localStorage.getItem('view')||'home';
+async function api(p,opt={}){const o={headers:{}};if(opt.body&&!(opt.body instanceof FormData)){o.headers['Content-Type']='application/json';o.body=JSON.stringify(opt.body)}else if(opt.body)o.body=opt.body;
+ o.method=opt.method||(opt.body?'POST':'GET');const r=await fetch(p,o);const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.detail||r.statusText);return j}
+function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),3500)}
+const sc=v=>v>=70?'s-hi':v>=50?'s-md':'s-lo';
+function agentSel(id){return `<select id="${id}"><option value="">Auto (best available)</option>${Object.entries(S.agents||{}).map(([k,a])=>`<option value="${k}" ${a.ready?'':'disabled'}>${a.label}${a.ready?'':' — unavailable'}</option>`).join('')}</select>`}
+async function run(btn,fn){const t=btn.innerHTML;btn.disabled=true;btn.innerHTML='<span class="spin"></span> Working…';try{return await fn()}catch(e){toast('⚠️ '+e.message)}finally{btn.disabled=false;btn.innerHTML=t}}
+function out(el,text,agent){el.innerHTML=`<div class="card out"><div class="row small muted">by ${esc(agent||'?')}<span class="right"><button class="btn ghost" onclick="navigator.clipboard.writeText(this.closest('.card').dataset.raw);toast('Copied')">Copy</button></span></div><div class="md">${md(text)}</div></div>`;el.firstChild.dataset.raw=text}
+async function jobOptions(){const js=await api('/api/jobs?limit=80');return `<option value="">— paste a job description instead —</option>`+js.map(j=>`<option value="${esc(j.id)}">${Math.round(j.score)} · ${esc(j.title)} — ${esc(j.company)}</option>`).join('')}
+
+async function refresh(){S=await api('/api/state');const a=S.agents;$('#foot').innerHTML=Object.values(a).map(x=>`<div><span class="dot ${x.ready?'on':''}"></span> ${esc(x.label)}</div>`).join('')+`<div><span class="dot ${S.email?'on':''}"></span> Email alerts</div>`}
+function go(v){view=v;localStorage.setItem('view',v);document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));V[v]()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+
+const V={};
+V.home=async()=>{await refresh();const c=S.counts||{};const r=S.resume;
+$('#main').innerHTML=`<h2>Hi${S.settings.name?', '+esc(S.settings.name.split(' ')[0]):''} 👋</h2><p class="sub">${r?`Hunting for <b>${esc((S.settings.target_roles||[]).slice(0,3).join(', ')||'—')}</b> in ${esc((S.settings.locations||[]).join(', ')||'anywhere')}`:'Start by uploading your resume. Everything else is personalised from it.'}</p>
+${!r?`<div class="card" style="margin-bottom:14px"><b>Step 1:</b> upload your resume → <button class="btn" onclick="go('resume')">Upload resume</button></div>`:''}
+<div class="grid g4"><div class="card stat"><span>Jobs tracked</span><b>${S.total}</b></div><div class="card stat"><span>Strong matches</span><b>${S.top}</b></div>
+<div class="card stat"><span>Applied</span><b>${(c.applied||0)+(c.interview||0)+(c.offer||0)}</b></div><div class="card stat"><span>Interviews</span><b>${c.interview||0}</b></div></div>
+<div class="grid g2" style="margin-top:14px"><div class="card"><div class="row"><b>Agent scan</b><span class="right small muted">${S.next_scan?'next ≈ '+new Date(S.next_scan*1000).toLocaleString():''}</span></div>
+<p class="small muted">Every ${S.settings.scan_interval_hours}h the agents pull jobs from Remotive, Arbeitnow, RemoteOK, Jobicy, The Muse${S.settings.watch_companies.length?', your watched company boards':''} (+Adzuna if a key is set), score them against your resume, have Claude/Codex/Gemini review the best ones, and email you.</p>
+<div class="row"><button class="btn" id="scanBtn">Run scan now</button><button class="btn ghost" id="weekBtn">Send weekly plan</button>${S.email?'':'<span class="small" style="color:var(--warn)">Email not configured, see Settings</span>'}</div>
+<div class="log" id="log" style="margin-top:10px">${esc(S.scan.last||'No scans yet.')}</div></div>
+<div class="card"><b>Top matches</b><div id="topj"></div></div></div>
+<div class="card" style="margin-top:14px"><b>Pipeline</b><div class="row" style="margin-top:8px">${['new','saved','applied','interview','offer','rejected','archived'].map(s=>`<span class="chip">${s}: ${c[s]||0}</span>`).join('')}</div></div>`;
+$('#scanBtn').onclick=e=>run(e.target,async()=>{await api('/api/scan',{body:{}});pollLog()});
+$('#weekBtn').onclick=e=>run(e.target,async()=>{await api('/api/weekly',{body:{}});toast('Building plan with the agent council, it will be emailed')});
+const js=await api('/api/jobs?limit=8&status=new');$('#topj').innerHTML=js.map(jobRow).join('')||'<p class="muted">Run a scan to find jobs.</p>';bindJobs();if(S.scan.running)pollLog()}
+async function pollLog(){const l=await api('/api/scan/log');const el=$('#log');if(el){el.textContent=l.log.join('\n');el.scrollTop=1e9}if(l.running)setTimeout(pollLog,2000);else if(view==='home'&&el)setTimeout(()=>V.home(),800)}
+
+function jobRow(j){const v=j.ai_verdict?JSON.parse(j.ai_verdict):null;return `<div class="job" data-id="${esc(j.id)}"><div class="score ${sc(j.score)}">${Math.round(j.score)}</div>
+<div><div class="t">${esc(j.title)}</div><div class="m">${esc(j.company)} · ${esc(j.location||'')} · ${esc(j.source)}${j.salary?' · '+esc(j.salary):''}</div>
+${v?`<div class="small"><b>${esc(v.verdict||'')}</b> ${esc(v.fit??'')} — ${esc(v.why||'')} <span class="muted">(${esc(v.agent||'')})</span></div>`:''}</div>
+<div><span class="chip">${esc(j.status)}</span></div></div>`}
+function bindJobs(){document.querySelectorAll('.job').forEach(e=>e.onclick=()=>openJob(e.dataset.id))}
+
+V.jobs=async()=>{$('#main').innerHTML=`<h2>Jobs</h2><p class="sub">Ranked by fit to your resume. Click a job to tailor, review, or prep.</p>
+<div class="card"><div class="row"><input id="q" placeholder="Search title, company, skill…" style="flex:1;min-width:200px"><select id="st" style="width:150px"><option value="">All statuses</option>${['new','saved','applied','interview','offer','rejected','archived'].map(s=>`<option>${s}</option>`).join('')}</select>
+<select id="mn" style="width:130px"><option value="0">Any score</option><option value="40">40+</option><option value="55" selected>55+</option><option value="70">70+</option></select><button class="btn ghost" id="addJ">+ Add job manually</button></div>
+<div id="jl" style="margin-top:8px"></div></div>
+<div class="card" style="margin-top:14px"><b>🔎 Search-engine (X-ray) hunting</b><p class="small muted">Targeted Google queries that surface fresh postings on company ATS boards (Greenhouse, Lever, Ashby, Workday) often missing from aggregators.</p><div id="xr"></div></div>`;
+const load=async()=>{const js=await api(`/api/jobs?q=${encodeURIComponent($('#q').value)}&status=${$('#st').value}&min_score=${$('#mn').value}`);$('#jl').innerHTML=js.map(jobRow).join('')||'<p class="muted">No jobs match. Run a scan or lower the score filter.</p>';bindJobs()};
+$('#q').oninput=()=>{clearTimeout(window._t);window._t=setTimeout(load,300)};$('#st').onchange=load;$('#mn').onchange=load;load();
+$('#addJ').onclick=()=>{drawer(`<h2>Add a job</h2><label>Title</label><input id="aT"><label>Company</label><input id="aC"><label>Location</label><input id="aL"><label>URL</label><input id="aU"><label>Description</label><textarea id="aD" style="min-height:220px"></textarea><div class="row" style="margin-top:10px"><button class="btn" id="aS">Add & score</button></div>`);
+$('#aS').onclick=e=>run(e.target,async()=>{const j=await api('/api/job/add',{body:{title:$('#aT').value,company:$('#aC').value,location:$('#aL').value,url:$('#aU').value,description:$('#aD').value}});closeDrawer();openJob(j.id)})};
+const xr=await api('/api/xray');$('#xr').innerHTML=xr.map(r=>`<div style="margin:8px 0"><b>${esc(r.role)}</b><br>${r.links.map(l=>`<a class="chip" target="_blank" href="${esc(l.url)}">${esc(l.label)}</a>`).join('')}</div>`).join('')}
+
+function drawer(h){const d=$('#drawer');d.innerHTML=`<div class="row"><span class="right"><button class="btn ghost" onclick="closeDrawer()">✕ Close</button></span></div>`+h;d.classList.remove('hidden')}
+function closeDrawer(){$('#drawer').classList.add('hidden')}
+async function openJob(id){const j=await api('/api/job?id='+encodeURIComponent(id));const v=j.ai_verdict?JSON.parse(j.ai_verdict):null;const m=JSON.parse(j.matched||'[]'),x=JSON.parse(j.missing||'[]');
+drawer(`<h2>${esc(j.title)}</h2><p class="sub">${esc(j.company)} · ${esc(j.location)} · <a href="${esc(j.url)}" target="_blank">Open posting ↗</a></p>
+<div class="row"><span class="score ${sc(j.score)}" style="padding:6px 12px">${Math.round(j.score)}</span><select id="jst" style="width:160px">${['new','saved','applied','interview','offer','rejected','archived'].map(s=>`<option ${s===j.status?'selected':''}>${s}</option>`).join('')}</select></div>
+<div style="margin-top:8px">${m.map(s=>`<span class="chip">${esc(s)}</span>`).join('')}${x.map(s=>`<span class="chip miss">${esc(s)}</span>`).join('')}</div>
+${v?`<div class="card" style="margin-top:10px"><b>${esc(v.verdict)} · fit ${esc(v.fit)}</b> <span class="small muted">by ${esc(v.agent)}</span><p>${esc(v.why)}</p><p><i>Lead with:</i> ${esc(v.angle)}</p>${(v.red_flags||[]).length?`<p style="color:var(--warn)">⚠ ${esc(v.red_flags.join(' · '))}</p>`:''}</div>`:''}
+<label>Agent</label>${agentSel('jag')}
+<div class="row" style="margin-top:10px"><button class="btn" data-a="review">🤖 Deep review</button><button class="btn" data-a="tailor_resume">📄 Tailored resume</button><button class="btn" data-a="improve_resume">📝 CV fixes</button><button class="btn" data-a="cover_letter">✍️ Cover letter</button><button class="btn" data-a="email">✉️ Recruiter email</button><button class="btn" data-a="ats">✅ ATS check</button><button class="btn" data-a="interview">🎤 Interview prep</button><button class="btn" style="color:#b91c1c;border-color:#b91c1c" id="jdel">🗑 Delete</button></div>
+<label>Notes</label><textarea id="jn" style="min-height:60px">${esc(j.notes||'')}</textarea>
+<div id="jo"></div>
+${j.docs.length?`<label>Saved for this job</label>${j.docs.map(d=>`<a class="chip" href="#" onclick="openDoc(${d.id});return false">${esc(d.title)}</a>`).join('')}`:''}
+<label>Description</label><div class="md small" style="white-space:pre-wrap">${esc(j.description)}</div>`);
+$('#jst').onchange=async()=>{await api('/api/job/update',{body:{id,status:$('#jst').value}});toast('Status updated')};
+$('#jn').onchange=async()=>{await api('/api/job/update',{body:{id,notes:$('#jn').value}});toast('Notes saved')};
+if($('#jdel'))$('#jdel').onclick=async()=>{if(!confirm('Delete this job?'))return;await api('/api/job/delete',{body:{id}});toast('Deleted');closeDrawer();V.jobs()};
+document.querySelectorAll('#drawer [data-a]').forEach(b=>b.onclick=e=>run(e.target,async()=>{const a=b.dataset.a,ag=$('#jag').value||undefined;
+ if(a==='review'){await api('/api/job/review',{body:{id,agent:ag}});return openJob(id)}
+ const r=await api('/api/ai/'+a,{body:{job_id:id,agent:ag}});
+ if(a==='ats')return out($('#jo'),atsMd(r),r.agent);out($('#jo'),r.text,r.agent)}))}
+function atsMd(r){const R=r.rules;return `## ATS score: ${R.score}/100${R.keyword_coverage!=null?` · keyword coverage ${R.keyword_coverage}%`:''}\n\n`+R.checks.map(c=>`- ${c.ok?'✅':'❌'} **${c.name}**: ${c.ok?'':c.tip}`).join('\n')+(R.missing?`\n\n**Missing skills:** ${R.missing.join(', ')||'none'}\n\n**JD terms not in resume:** ${(R.jd_terms_missing||[]).join(', ')}`:'')+`\n\n---\n\n${r.ai||''}`}
+
+V.resume=async()=>{await refresh();const r=S.resume,p=r?.profile||{};
+$('#main').innerHTML=`<h2>Resume & ATS</h2><p class="sub">Your master resume powers matching, letters and coaching.</p>
+<div class="grid g2"><div class="card"><b>Master resume</b><p class="small muted">${r?`Current: ${esc(r.name)} (${r.chars} chars)`:'None uploaded yet'}</p>
+<input type="file" id="rf" accept=".pdf,.docx,.txt,.md"><div class="row" style="margin-top:8px"><button class="btn" id="ru">Upload & analyse</button></div>
+<details style="margin-top:10px"><summary class="small">…or paste text</summary><textarea id="rt"></textarea><button class="btn ghost" id="rp" style="margin-top:6px">Save pasted resume</button></details></div>
+<div class="card"><b>Profile the agent built</b>${r?`<p>${esc(p.headline||'')}</p><p class="small">${esc(p.summary||'')}</p>
+<label>Strengths</label>${(p.strengths||[]).map(s=>`<span class="chip">${esc(s)}</span>`).join('')}<label>Gaps</label>${(p.gaps||[]).map(s=>`<span class="chip miss">${esc(s)}</span>`).join('')}
+<label>Detected skills</label>${(p.skills||[]).map(s=>`<span class="chip">${esc(s)}</span>`).join('')}${p._error?`<p class="small" style="color:var(--warn)">AI profile unavailable (${esc(p._error.slice(0,140))}). Local skill detection used.</p>`:''}
+<div class="row" style="margin-top:10px"><button class="btn ghost" id="rpf">🤖 Rebuild profile with AI</button><span class="small muted">Re-detects roles, skills and locations, and updates Settings.</span></div>`:'<p class="muted">Upload to see it.</p>'}</div></div>
+<div class="card" style="margin-top:14px"><b>✅ ATS checker</b><p class="small muted">Paste a job description, or pick a tracked job. Instant rule-based scan plus an AI recruiter review.</p>
+<label>Job</label><select id="aj"></select><label>Job description</label><textarea id="ajd"></textarea>
+<label>Agent</label>${agentSel('aag')}<div class="row" style="margin-top:10px"><button class="btn ghost" id="aq">Quick scan (instant)</button><button class="btn" id="aa">Full ATS review (AI)</button></div><div id="ao"></div></div>
+<div class="card" style="margin-top:14px"><b>📄 Improve / tailor resume</b><label>Job (optional)</label><select id="ij"></select><label>Or paste JD</label><textarea id="ijd" style="min-height:70px"></textarea>
+<label>Focus (optional)</label><input id="if" placeholder="e.g. pivot to industry, emphasise ML, make it 1 page, French version"><label>Agent</label>${agentSel('iag')}
+<div class="row" style="margin-top:10px"><button class="btn" id="ib">Improve resume</button></div><div id="io"></div></div>`;
+const opts=await jobOptions();$('#aj').innerHTML=opts;$('#ij').innerHTML=opts;
+$('#ru').onclick=e=>run(e.target,async()=>{const f=$('#rf').files[0];if(!f)return toast('Choose a file');const fd=new FormData();fd.append('file',f);const r=await api('/api/resume',{body:fd});toast('Resume analysed'+(r.settings_updated.length?' · auto-filled '+r.settings_updated.join(', '):''));V.resume()});
+if($('#rpf'))$('#rpf').onclick=e=>run(e.target,async()=>{const r=await api('/api/resume/reprofile',{body:{}});toast('Profile rebuilt by '+r.profile._agent);V.resume()});
+$('#rp').onclick=e=>run(e.target,async()=>{await api('/api/resume/text',{body:{text:$('#rt').value}});V.resume()});
+$('#aq').onclick=e=>run(e.target,async()=>{const r=await api('/api/ats/quick',{body:{jd:$('#ajd').value}});out($('#ao'),atsMd({rules:r}),'local rules')});
+$('#aa').onclick=e=>run(e.target,async()=>{const r=await api('/api/ai/ats',{body:{jd:$('#ajd').value,job_id:$('#aj').value||null,agent:$('#aag').value||undefined}});out($('#ao'),atsMd(r),r.agent)});
+$('#ib').onclick=e=>run(e.target,async()=>{const r=await api('/api/ai/improve_resume',{body:{job_id:$('#ij').value||null,jd:$('#ijd').value,focus:$('#if').value,agent:$('#iag').value||undefined}});out($('#io'),r.text,r.agent)})}
+
+V.write=async()=>{$('#main').innerHTML=`<h2>Letters & Emails</h2><p class="sub">Drafts built from your real experience, saved in Documents.</p>
+<div class="grid g2"><div class="card"><b>✍️ Cover letter</b><label>Job</label><select id="cj"></select><label>Or paste JD</label><textarea id="cjd" style="min-height:80px"></textarea>
+<div class="row"><div style="flex:1"><label>Language</label><select id="cl"><option>English</option><option>French</option><option>Spanish</option><option>German</option></select></div><div style="flex:1"><label>Tone</label><select id="ct"><option>confident, warm, concise</option><option>formal and academic</option><option>enthusiastic startup</option><option>executive, crisp</option></select></div></div>
+<label>Anything to mention?</label><input id="cx" placeholder="referral from X, relocation, visa status…"><label>Agent</label>${agentSel('cag')}<div class="row" style="margin-top:10px"><button class="btn" id="cb">Write cover letter</button></div></div>
+<div class="card"><b>✉️ Email drafter</b><label>Type</label><select id="ek"><option value="recruiter_outreach">Recruiter / hiring manager outreach</option><option value="referral_request">Referral request</option><option value="follow_up">Follow-up after applying</option><option value="thank_you">Post-interview thank-you</option><option value="networking">Networking / coffee chat</option><option value="negotiation">Offer negotiation</option><option value="withdraw">Withdraw politely</option></select>
+<label>Job (optional)</label><select id="ej"></select><label>Recipient</label><input id="er" placeholder="Name, role"><label>Context</label><textarea id="ec" style="min-height:60px" placeholder="What happened, what you want"></textarea>
+<div class="row"><div style="flex:1"><label>Language</label><select id="el"><option>English</option><option>French</option><option>Spanish</option></select></div><div style="flex:1"><label>Agent</label>${agentSel('eag')}</div></div><div class="row" style="margin-top:10px"><button class="btn" id="eb">Draft email</button></div></div></div>
+<div id="wo"></div>`;
+const o=await jobOptions();$('#cj').innerHTML=o;$('#ej').innerHTML=o.replace('— paste a job description instead —','— none —');
+$('#cb').onclick=e=>run(e.target,async()=>{const r=await api('/api/ai/cover_letter',{body:{job_id:$('#cj').value||null,jd:$('#cjd').value,language:$('#cl').value,tone:$('#ct').value,extra:$('#cx').value,agent:$('#cag').value||undefined}});out($('#wo'),r.text,r.agent)});
+$('#eb').onclick=e=>run(e.target,async()=>{const r=await api('/api/ai/email',{body:{kind:$('#ek').value,job_id:$('#ej').value||null,recipient:$('#er').value,context:$('#ec').value,language:$('#el').value,agent:$('#eag').value||undefined}});out($('#wo'),r.text,r.agent)})}
+
+V.skills=async()=>{const g=await api('/api/gaps');
+$('#main').innerHTML=`<h2>Skills & Training</h2><p class="sub">What the market asks for in your best-matching ${g.jobs_analyzed} jobs, and a plan to close the gap.</p>
+<div class="grid g2"><div class="card"><b>Most-requested skills you're missing</b><div style="margin-top:6px">${g.missing.map(([s,n])=>`<a class="chip miss" href="#" onclick="$('#ts').value='${esc(s)}';return false">${esc(s)} ×${n}</a>`).join('')||'<span class="muted">Run a scan first.</span>'}</div>
+<b style="display:block;margin-top:12px">Your strongest matching skills</b><div>${g.strong.map(([s,n])=>`<span class="chip">${esc(s)} ×${n}</span>`).join('')}</div></div>
+<div class="card"><b>🗺 Development plan</b><div class="row"><div style="flex:1"><label>Weeks</label><input id="dw" type="number" value="8"></div><div style="flex:1"><label>Hours / week</label><input id="dh" type="number" value="8"></div></div>
+<label>Goal</label><input id="dg" placeholder="e.g. move from research to industry ML in medtech"><label class="row"><input type="checkbox" id="dc" style="width:auto"> Ask the whole agent council (Claude + Codex + Gemini) and merge</label>
+<div class="row" style="margin-top:10px"><button class="btn" id="db">Build my plan</button></div></div></div>
+<div class="card" style="margin-top:14px"><b>🏋️ Skill trainer</b><div class="row"><div style="flex:2"><label>Skill</label><input id="ts" placeholder="e.g. PyTorch, Docker, IEC 62304, SQL"></div><div style="flex:1"><label>Mode</label><select id="tm"><option value="quiz">Quiz</option><option value="lesson">Lesson</option><option value="project">Portfolio project</option><option value="interview">Interview Qs</option></select></div>
+<div style="flex:1"><label>Level</label><select id="tl"><option>beginner</option><option selected>intermediate</option><option>advanced</option></select></div></div>
+<div class="row" style="margin-top:10px"><button class="btn" id="tb">Train me</button></div><div id="to"></div>
+<div id="gradebox" class="hidden"><label>Your answers</label><textarea id="ta"></textarea><button class="btn" id="tg" style="margin-top:6px">Grade my answers</button><div id="tgo"></div></div></div><div id="so"></div>`;
+let last='';
+$('#db').onclick=e=>run(e.target,async()=>{const r=await api('/api/ai/dev_plan',{body:{weeks:$('#dw').value,hours:$('#dh').value,goal:$('#dg').value,council:$('#dc').checked}});out($('#so'),r.text,r.agent)});
+$('#tb').onclick=e=>run(e.target,async()=>{const r=await api('/api/ai/train',{body:{skill:$('#ts').value,mode:$('#tm').value,level:$('#tl').value}});last=r.text;const shown=$('#tm').value==='quiz'?r.text.split(/###\s*Answers/i)[0]:r.text;out($('#to'),shown,r.agent);$('#gradebox').classList.remove('hidden')});
+$('#tg').onclick=e=>run(e.target,async()=>{const r=await api('/api/ai/grade',{body:{skill:$('#ts').value,exercise:last,answers:$('#ta').value}});out($('#tgo'),r.text,r.agent)})}
+
+V.coach=async()=>{$('#main').innerHTML=`<h2>Career Coach</h2><p class="sub">Ask anything: strategy, salary, which job to prioritise, how to explain a gap, visa questions…</p>
+<div class="card"><div class="chat" id="ch"></div><div class="row" style="margin-top:10px"><textarea id="cm" style="min-height:60px;flex:1" placeholder="Message your coach… (Enter to send, Shift+Enter for a new line)"></textarea></div>
+<div class="row" style="margin-top:6px">${agentSel('chag').replace('<select','<select style="width:240px"')}<label class="row" style="margin:0"><input type="checkbox" id="chc" style="width:auto"> Council mode</label><span class="right"></span><button class="btn ghost" id="cc">Clear</button><button class="btn" id="cs">Send</button></div></div>`;
+const render=async()=>{const h=await api('/api/chat');$('#ch').innerHTML=h.map(m=>`<div class="msg ${m.role}">${m.role==='assistant'?`<div class="md">${md(m.content)}</div><div class="small muted">${esc(m.agent)}</div>`:esc(m.content)}</div>`).join('')||'<p class="muted">Try: "Which 3 jobs in my list should I apply to first and why?"</p>';$('#ch').scrollTop=1e9};render();
+const send=e=>run($('#cs'),async()=>{const m=$('#cm').value.trim();if(!m)return;$('#cm').value='';$('#ch').insertAdjacentHTML('beforeend',`<div class="msg user">${esc(m)}</div><div class="msg assistant"><span class="spin"></span></div>`);$('#ch').scrollTop=1e9;await api('/api/chat',{body:{message:m,agent:$('#chag').value||undefined,council:$('#chc').checked}}).catch(e=>toast(e.message));render()});
+$('#cs').onclick=send;$('#cm').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};$('#cc').onclick=async()=>{await api('/api/chat',{method:'DELETE'});render()}}
+
+V.agents=async()=>{await refresh();
+$('#main').innerHTML=`<h2>Agents Council</h2><p class="sub">Claude Opus, Codex (Astra) and Gemini answer in parallel, then the lead agent merges the best of each.</p>
+<div class="grid g4">${Object.entries(S.agents).map(([k,a])=>`<div class="card"><div class="row"><span class="dot ${a.ready?'on':''}"></span><b>${esc(a.label)}</b></div><div class="small muted" style="word-break:break-all">${esc(a.detail)}</div></div>`).join('')}</div>
+<div class="row" style="margin-top:10px"><button class="btn ghost" id="pb">Test agent connections</button><span class="small muted">Sends a tiny "reply OK" prompt to each agent.</span></div><div id="po"></div>
+<div class="card" style="margin-top:14px"><label>Ask the council</label><textarea id="cp" placeholder="e.g. Review my positioning for medtech imaging roles in France vs remote EU. What should I change?"></textarea><div class="row" style="margin-top:8px"><button class="btn" id="cb">Ask all agents</button></div><div id="co"></div></div>
+<div class="card" style="margin-top:14px"><b>Recent agent runs</b>${S.runs.map(r=>`<div class="check"><span>${r.ok?'✅':'❌'}</span><span>${esc(r.kind)}</span><span class="muted">${new Date(r.started*1000).toLocaleString()}</span><span>${esc(r.summary)}</span></div>`).join('')||'<p class="muted">None yet.</p>'}</div>`;
+$('#pb').onclick=e=>run(e.target,async()=>{const r=await api('/api/agents/probe',{body:{}});$('#po').innerHTML=Object.entries(r).map(([k,v])=>`<div class="check"><span>${v.ok?'✅':'❌'}</span><b>${esc(k)}</b><span class="small muted">${esc(v.ok?v.reply:v.error)}</span></div>`).join('');refresh()});
+$('#cb').onclick=e=>run(e.target,async()=>{const r=await api('/api/council',{body:{prompt:$('#cp').value}});
+$('#co').innerHTML=`<div class="card out"><b>🏆 Merged answer</b> <span class="small muted">lead: ${esc(r.lead)}</span><div class="md">${md(r.synthesis)}</div></div>`+r.answers.map(a=>`<details class="card out"><summary><b>${esc(a.family)}</b> <span class="small muted">${esc(a.agent||'unavailable')}</span></summary><div class="md">${md(a.text)}</div></details>`).join('')})}
+
+V.docs=async()=>{const d=await api('/api/docs');$('#main').innerHTML=`<h2>Documents</h2><p class="sub">Everything the agents have written for you.</p><div class="card">${d.map(x=>`<div class="check" style="cursor:pointer" onclick="openDoc(${x.id})"><span class="chip">${esc(x.kind)}</span><span style="flex:1">${esc(x.title)}</span><span class="small muted">${esc(x.agent)} · ${new Date(x.created*1000).toLocaleDateString()}</span></div>`).join('')||'<p class="muted">Nothing yet.</p>'}</div>`}
+async function openDoc(id){const d=await api('/api/doc?id='+id);drawer(`<h2>${esc(d.title)}</h2><p class="sub">${esc(d.agent)} · ${new Date(d.created*1000).toLocaleString()}</p><div class="row"><button class="btn ghost" id="dcp">Copy</button><button class="btn ghost" id="ddl">Download .md</button><button class="btn ghost" id="ddel">Delete</button></div><div class="md out">${md(d.content)}</div>`);
+$('#dcp').onclick=()=>{navigator.clipboard.writeText(d.content);toast('Copied')};$('#ddl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([d.content],{type:'text/markdown'}));a.download=d.title.replace(/[^\w-]+/g,'_')+'.md';a.click()};
+$('#ddel').onclick=async()=>{await api('/api/doc?id='+id,{method:'DELETE'});closeDrawer();if(view==='docs')V.docs()}}
+
+V.settings=async()=>{await refresh();const s=S.settings,L=a=>(a||[]).join(', ');
+$('#main').innerHTML=`<h2>Settings</h2><p class="sub">Auto-filled from your resume. Edit freely; jobs re-score on save.</p>
+<div class="grid g2"><div class="card"><b>Targeting</b><label>Your name</label><input id="s_name" value="${esc(s.name)}"><label>Target roles (comma-separated)</label><textarea id="s_roles" style="min-height:60px">${esc(L(s.target_roles))}</textarea>
+<label>Key skills / keywords</label><textarea id="s_kw" style="min-height:60px">${esc(L(s.keywords))}</textarea><label>Locations</label><input id="s_loc" value="${esc(L(s.locations))}">
+<label>Exclude titles containing</label><input id="s_ex" value="${esc(L(s.exclude_keywords))}"><label class="row"><input type="checkbox" id="s_rem" style="width:auto" ${s.remote_ok?'checked':''}> Remote is OK</label>
+<label>Company boards to watch (greenhouse:slug, lever:slug, ashby:slug)</label><input id="s_wc" value="${esc(L(s.watch_companies))}" placeholder="greenhouse:doctolib, lever:mistral, ashby:owkin">
+<label>Adzuna countries (needs free API key in .env)</label><input id="s_az" value="${esc(L(s.adzuna_countries))}"></div>
+<div class="card"><b>Agents & alerts</b><label>Alert email</label><input id="s_to" value="${esc(s.email_to)}"><div class="row small" style="margin-top:4px"><span class="dot ${S.email?'on':''}"></span> SMTP ${S.email?'configured':'not configured, add SMTP_USER and SMTP_PASSWORD to .env'}<button class="btn ghost right" id="et">Send test email</button></div>
+<label>Minimum match score for alerts</label><input id="s_min" type="number" value="${s.min_score}"><label>Scan every (hours)</label><input id="s_int" type="number" value="${s.scan_interval_hours}">
+<label>Jobs reviewed in depth by agents per scan</label><input id="s_top" type="number" value="${s.ai_review_top_n}"><label>Weekly plan hour (Mondays)</label><input id="s_h" type="number" value="${s.daily_digest_hour}">
+<label>Primary agent</label><select id="s_ai">${['auto','claude_cli','anthropic_api','codex','gemini'].map(x=>`<option ${x===s.ai_primary?'selected':''}>${x}</option>`).join('')}</select>
+<label>Council members</label><input id="s_cn" value="${esc(L(s.council_agents))}"></div></div>
+<div class="row" style="margin-top:14px"><button class="btn" id="ss">Save settings</button></div>`;
+const sp=v=>v.split(',').map(x=>x.trim()).filter(Boolean);
+$('#ss').onclick=e=>run(e.target,async()=>{await api('/api/settings',{body:{name:$('#s_name').value,target_roles:sp($('#s_roles').value),keywords:sp($('#s_kw').value),locations:sp($('#s_loc').value),exclude_keywords:sp($('#s_ex').value),remote_ok:$('#s_rem').checked,watch_companies:sp($('#s_wc').value),adzuna_countries:sp($('#s_az').value),email_to:$('#s_to').value,min_score:+$('#s_min').value,scan_interval_hours:+$('#s_int').value,ai_review_top_n:+$('#s_top').value,daily_digest_hour:+$('#s_h').value,ai_primary:$('#s_ai').value,council_agents:sp($('#s_cn').value)}});toast('Saved, re-scoring jobs')});
+$('#et').onclick=e=>run(e.target,async()=>{const r=await api('/api/email/test',{body:{}});toast('Sent to '+r.sent_to)})}
+
+go(view);
+</script>
+</body>
+</html>

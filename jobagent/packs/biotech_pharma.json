@@ -1,0 +1,129 @@
+{
+ "name": "Biotech & pharma",
+ "field": "biotech, pharma and life-science R&D",
+ "region": "Europe",
+ "lanes": [
+  {
+   "id": "drug_disc",
+   "label": "Drug Discovery",
+   "glyph": "⌬",
+   "terms": [
+    "drug discovery",
+    "medicinal chemistry",
+    "assay",
+    "screening",
+    "target validation",
+    "pharmacology"
+   ]
+  },
+  {
+   "id": "clinical",
+   "label": "Clinical Development",
+   "glyph": "✚",
+   "terms": [
+    "clinical trials",
+    "clinical research associate",
+    "cra",
+    "clinical operations",
+    "gcp",
+    "regulatory affairs"
+   ]
+  },
+  {
+   "id": "bioinfo",
+   "label": "Bioinformatics & Comp Bio",
+   "glyph": "∿",
+   "terms": [
+    "bioinformatics",
+    "computational biology",
+    "genomics",
+    "single-cell",
+    "ngs",
+    "omics"
+   ]
+  },
+  {
+   "id": "bioprocess",
+   "label": "Bioprocess & CMC",
+   "glyph": "⚗",
+   "terms": [
+    "bioprocess",
+    "cmc",
+    "upstream",
+    "downstream",
+    "gmp",
+    "manufacturing",
+    "quality assurance"
+   ]
+  }
+ ],
+ "domain_words": [
+  "biotech",
+  "pharma",
+  "drug",
+  "clinical",
+  "life science",
+  "therapeutic",
+  "biology",
+  "health",
+  "molecule"
+ ],
+ "collab_topics": [
+  "single-cell genomics",
+  "drug target discovery",
+  "antibody engineering"
+ ],
+ "hackathon_queries": [
+  "biotech",
+  "health AI",
+  "bioinformatics"
+ ],
+ "funding_queries": [
+  [
+   "biotechnology",
+   "funding"
+  ],
+  [
+   "MSCA postdoctoral fellowships",
+   "fellowship"
+  ],
+  [
+   "EIC Accelerator",
+   "startup_funding"
+  ]
+ ],
+ "leadership_queries": [
+  "CSO biotech",
+  "Chief Scientific Officer",
+  "VP Research",
+  "Head of Discovery",
+  "Head of R&D biotech"
+ ],
+ "intel_companies": [
+  "Sanofi",
+  "Novartis",
+  "Roche",
+  "AstraZeneca",
+  "Genmab",
+  "BioNTech",
+  "Ipsen",
+  "Servier",
+  "Evotec",
+  "Lonza"
+ ],
+ "conferences": [
+  "BIO International",
+  "BIO-Europe",
+  "ASCO",
+  "ESMO",
+  "ISMB",
+  "EMBO Members Meeting"
+ ],
+ "id": "biotech_pharma",
+ "core_lanes": [
+  "drug_disc",
+  "clinical",
+  "bioinfo",
+  "bioprocess"
+ ]
+}

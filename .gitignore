@@ -1,0 +1,23 @@
+# personal data & secrets — never commit
+.env
+data/
+logs/
+applications/
+*.db
+*.bak*
+AGENTS.local.md
+# environments & caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.DS_Store
+outputs/
+output/
+tmp/
+sfpbm-prototype/
+.claude/

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JobAgent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<link rel="stylesheet" href="/static/hud.css">
+</head>
+<body>
+<div class="scan"></div>
+<header class="top">
+  <div class="logo"><span class="sig">◬</span> ANIMUS<span class="slash">//</span>JOBAGENT</div>
+  <div class="xpwrap" id="xp" title="Level up by triaging, verifying, applying and practising"><b class="lvl" id="lvl">LV 1</b><div><div class="rank" id="rank">Recruit</div><div class="xpbar"><i id="xpfill"></i></div></div><span class="xpnum" id="xpnum"></span><span class="streak" id="streak" title="Daily streak"></span></div>
+  <button class="geo" id="usToggle" title="Show or hide opportunities located in the United States">US</button>
+  <div class="agents" id="agentLights"></div>
+  <div class="clock" id="clock"></div>
+</header>
+<nav id="nav">
+  <button data-v="home"><b>⌂</b><span>Command</span></button>
+  <button data-v="discover"><b>⇆</b><span>Discover</span></button>
+  <button data-v="templates"><b>⊕</b><span>Template Jobs</span></button>
+  <div class="navh">Industry</div>
+  <button data-v="tracks"><b>◈</b><span>Jobs · Tracks</span><i class="badge" data-sec="jobs"></i></button>
+<div id="grp-academia">
+  <div class="navh">Academia</div>
+  <button data-v="academia"><b>🎓</b><span>Academia dashboard</span></button>
+  <button data-v="postdocs"><b>⌬</b><span>Postdocs</span><i class="badge" data-sec="postdocs"></i></button>
+  <button data-v="fellowships"><b>✧</b><span>Fellowships</span><i class="badge" data-sec="fellowships"></i></button>
+  <button data-v="grants"><b>✦</b><span>Research Grants</span><i class="badge" data-sec="grants"></i></button>
+  <button data-v="match"><b>⚯</b><span>Fellowship Match</span></button>
+  <button data-v="contacts"><b>⚭</b><span>PI Contacts</span><i class="badge" data-sec="contacts"></i></button>
+</div>
+<div id="grp-community">
+  <div class="navh">Community</div>
+  <button data-v="hackathons"><b>⚡</b><span>Hackathons</span><i class="badge" data-sec="hackathons"></i></button>
+  <button data-v="events"><b>✺</b><span>Events · Fairs</span><i class="badge" data-sec="events"></i></button>
+</div>
+  <div class="navh">Plan</div>
+  <button data-v="map"><b>◍</b><span>World Map</span></button>
+  <button data-v="tracker"><b>▤</b><span>Tracker</span></button>
+  <button data-v="calendar"><b>▦</b><span>Deadlines</span></button>
+  <div class="navh fold" data-fold="tools">More ▾</div>
+  <div class="navgrp">
+  <button data-v="setup"><b>✦</b><span>Setup</span></button>
+  <button data-v="skills"><b>⬡</b><span>Skills</span></button>
+  <button data-v="linkedin"><b>in</b><span>LinkedIn Studio</span></button>
+  <button data-v="interview"><b>◎</b><span>Mock Interview</span></button>
+  <button data-v="resume"><b>▣</b><span>Resume · ATS</span></button>
+  <button data-v="write"><b>✎</b><span>Letters · Email</span></button>
+  <button data-v="coach"><b>◉</b><span>Coach</span></button>
+  <button data-v="agents"><b>⚭</b><span>Council</span></button>
+  <button data-v="docs"><b>▥</b><span>Archive</span></button>
+  <button data-v="settings"><b>⚙</b><span>Config</span></button>
+  </div>
+</nav>
+<main id="main"></main>
+<div id="drawer" class="drawer hidden"></div>
+<div id="tip" class="tip hidden"></div>
+<script src="/static/hud.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+{
+ "name": "Data science & AI/ML",
+ "field": "data science, machine learning and AI engineering",
+ "region": "Europe",
+ "lanes": [
+  {
+   "id": "ml_eng",
+   "label": "ML Engineering",
+   "glyph": "◈",
+   "terms": [
+    "machine learning engineer",
+    "mlops",
+    "pytorch",
+    "model deployment",
+    "ml platform",
+    "inference"
+   ]
+  },
+  {
+   "id": "llm",
+   "label": "LLM & GenAI",
+   "glyph": "✦",
+   "terms": [
+    "llm",
+    "generative ai",
+    "rag",
+    "agents",
+    "prompt",
+    "fine-tuning",
+    "nlp",
+    "transformers"
+   ]
+  },
+  {
+   "id": "data_sci",
+   "label": "Data Science & Analytics",
+   "glyph": "∿",
+   "terms": [
+    "data scientist",
+    "statistics",
+    "a/b testing",
+    "experimentation",
+    "analytics",
+    "causal"
+   ]
+  },
+  {
+   "id": "data_eng",
+   "label": "Data Engineering",
+   "glyph": "▥",
+   "terms": [
+    "data engineer",
+    "spark",
+    "airflow",
+    "dbt",
+    "warehouse",
+    "etl",
+    "databricks",
+    "snowflake"
+   ]
+  },
+  {
+   "id": "research_ai",
+   "label": "AI Research",
+   "glyph": "⌬",
+   "terms": [
+    "research scientist",
+    "phd",
+    "publications",
+    "neurips",
+    "icml",
+    "deep learning research"
+   ]
+  }
+ ],
+ "domain_words": [
+  "machine learning",
+  "ai",
+  "data",
+  "model",
+  "llm",
+  "analytics",
+  "deep learning",
+  "nlp",
+  "computer vision"
+ ],
+ "collab_topics": [
+  "large language models evaluation",
+  "machine learning robustness"
+ ],
+ "hackathon_queries": [
+  "AI agents",
+  "LLM",
+  "machine learning",
+  "vibe coding",
+  "Kaggle"
+ ],
+ "funding_queries": [
+  [
+   "artificial intelligence",
+   "funding"
+  ],
+  [
+   "MSCA postdoctoral fellowships",
+   "fellowship"
+  ],
+  [
+   "EIC Accelerator",
+   "startup_funding"
+  ]
+ ],
+ "leadership_queries": [
+  "Head of AI",
+  "Chief AI Officer",
+  "Head of Data",
+  "VP Machine Learning",
+  "founding ML engineer",
+  "CTO AI startup"
+ ],
+ "intel_companies": [
+  "Mistral AI",
+  "Hugging Face",
+  "DeepMind",
+  "Anthropic",
+  "OpenAI",
+  "Aleph Alpha",
+  "Cohere",
+  "Owkin",
+  "Criteo",
+  "Spotify"
+ ],
+ "conferences": [
+  "NeurIPS",
+  "ICML",
+  "ICLR",
+  "ACL",
+  "CVPR",
+  "ECML-PKDD",
+  "PyData",
+  "AI Engineer Summit"
+ ],
+ "id": "data_ai",
+ "core_lanes": [
+  "ml_eng",
+  "llm",
+  "data_sci",
+  "data_eng",
+  "research_ai"
+ ]
+}

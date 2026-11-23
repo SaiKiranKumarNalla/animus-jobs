@@ -1,0 +1,129 @@
+{
+ "name": "Software engineering",
+ "field": "software engineering and developer tools",
+ "region": "Europe",
+ "lanes": [
+  {
+   "id": "backend",
+   "label": "Backend & Platform",
+   "glyph": "▤",
+   "terms": [
+    "backend",
+    "platform engineer",
+    "distributed systems",
+    "api",
+    "golang",
+    "java",
+    "python",
+    "kubernetes",
+    "microservices"
+   ]
+  },
+  {
+   "id": "frontend",
+   "label": "Frontend & Mobile",
+   "glyph": "▣",
+   "terms": [
+    "frontend",
+    "react",
+    "typescript",
+    "vue",
+    "ios",
+    "android",
+    "mobile",
+    "web developer"
+   ]
+  },
+  {
+   "id": "devops",
+   "label": "DevOps & SRE",
+   "glyph": "⚙",
+   "terms": [
+    "devops",
+    "sre",
+    "site reliability",
+    "terraform",
+    "aws",
+    "gcp",
+    "azure",
+    "ci/cd",
+    "observability"
+   ]
+  },
+  {
+   "id": "security",
+   "label": "Security",
+   "glyph": "⛨",
+   "terms": [
+    "security engineer",
+    "appsec",
+    "penetration",
+    "cloud security",
+    "iam",
+    "soc"
+   ]
+  }
+ ],
+ "domain_words": [
+  "software",
+  "saas",
+  "platform",
+  "developer",
+  "engineering",
+  "cloud",
+  "tech",
+  "startup",
+  "api",
+  "data"
+ ],
+ "collab_topics": [],
+ "hackathon_queries": [
+  "developer tools",
+  "AI agents",
+  "vibe coding",
+  "open source",
+  "web3"
+ ],
+ "funding_queries": [
+  [
+   "EIC Accelerator",
+   "startup_funding"
+  ]
+ ],
+ "leadership_queries": [
+  "CTO",
+  "VP Engineering",
+  "Head of Engineering",
+  "Engineering Manager",
+  "founding engineer",
+  "technical co-founder"
+ ],
+ "intel_companies": [
+  "Datadog",
+  "Stripe",
+  "Mistral AI",
+  "Spotify",
+  "Zalando",
+  "Revolut",
+  "Adyen",
+  "GitLab",
+  "Doctolib",
+  "Booking.com"
+ ],
+ "conferences": [
+  "KubeCon Europe",
+  "PyCon",
+  "JSConf",
+  "QCon London",
+  "FOSDEM",
+  "VivaTech",
+  "Web Summit"
+ ],
+ "id": "software_engineering",
+ "core_lanes": [
+  "backend",
+  "frontend",
+  "devops",
+  "security"
+ ]
+}

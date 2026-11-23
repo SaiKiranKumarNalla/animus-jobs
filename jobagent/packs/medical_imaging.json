@@ -1,0 +1,338 @@
+{
+ "id": "medical_imaging",
+ "name": "Medical imaging & nuclear medicine (MedTech, France/EU)",
+ "field": "medical imaging, nuclear medicine and MedTech",
+ "home_country": "France",
+ "region": "Europe",
+ "local_language": "French",
+ "lanes": [
+  {
+   "id": "pet_ct",
+   "label": "PET / CT",
+   "glyph": "◎",
+   "terms": [
+    "pet/ct",
+    "pet-ct",
+    "pet ct",
+    "positron",
+    "pet imaging",
+    "pet scanner",
+    "pet quantification",
+    "pet/mr",
+    "spect/ct"
+   ]
+  },
+  {
+   "id": "nuclear",
+   "label": "Nuclear Medicine",
+   "glyph": "☢",
+   "terms": [
+    "nuclear medicine",
+    "radiopharm",
+    "theranostic",
+    "radioligand",
+    "dosimetry",
+    "spect",
+    "radiotracer",
+    "molecular imaging",
+    "radionuclide",
+    "médecine nucléaire"
+   ]
+  },
+  {
+   "id": "imaging",
+   "label": "Medical Imaging",
+   "glyph": "▣",
+   "terms": [
+    "medical imaging",
+    "radiology",
+    "mri",
+    "computed tomography",
+    "ultrasound",
+    "image reconstruction",
+    "dicom",
+    "imaging scientist",
+    "imaging physicist",
+    "medical physics",
+    "imagerie médicale"
+   ]
+  },
+  {
+   "id": "ai_imaging",
+   "label": "AI in Medical Imaging",
+   "glyph": "◈",
+   "all_of": [
+    [
+     "deep learning",
+     "machine learning",
+     "artificial intelligence",
+     " ai ",
+     "ai-",
+     "computer vision",
+     "neural network",
+     "foundation model"
+    ],
+    [
+     "imaging",
+     "radiology",
+     "pathology",
+     "scan",
+     "mri",
+     "ct",
+     "pet",
+     "image"
+    ]
+   ]
+  },
+  {
+   "id": "medtech",
+   "label": "MedTech Innovation",
+   "glyph": "✚",
+   "terms": [
+    "medical device",
+    "medtech",
+    "medtech",
+    "iso 13485",
+    "mdr",
+    "fda",
+    "clinical application",
+    "product development",
+    "healthtech",
+    "health tech",
+    "dispositif médical",
+    "biomedical engineer"
+   ]
+  },
+  {
+   "id": "comp_model",
+   "label": "Computational Modelling",
+   "glyph": "∿",
+   "terms": [
+    "simulation",
+    "computational model",
+    "digital twin",
+    "monte carlo",
+    "finite element",
+    "fea",
+    "cfd",
+    "in silico",
+    "multiphysics",
+    "gate/geant4",
+    "geant4",
+    "modelling",
+    "modeling"
+   ]
+  },
+  {
+   "id": "fr_jobs",
+   "label": "French Jobs (France)",
+   "glyph": "🇫🇷",
+   "terms": [
+    "ingénieur",
+    "chercheur",
+    "imagerie médicale",
+    "médecine nucléaire",
+    "dispositif médical",
+    "traitement d'images",
+    "physique médicale",
+    "tep",
+    "irm"
+   ]
+  }
+ ],
+ "core_lanes": [
+  "ai_imaging",
+  "comp_model",
+  "imaging",
+  "nuclear",
+  "pet_ct"
+ ],
+ "labels": {
+  "vc": "MedTech Venture Capital",
+  "analyst": "MedTech Analyst"
+ },
+ "domain_words": [
+  "medtech",
+  "medical",
+  "imaging",
+  "health",
+  "biotech",
+  "nuclear",
+  "radiolog",
+  "diagnostic",
+  "pharma",
+  "life science",
+  "clinical",
+  "hospital",
+  "patient",
+  "device",
+  "santé",
+  "médical",
+  "imagerie"
+ ],
+ "radar": {
+  "hellowork_jobs": "HelloWork (hellowork.com) individual job vacancies in France: imagerie médicale, PET/CT/TEP, médecine nucléaire, radiophysique, ingénieur R&D biomédical, dispositifs médicaux, simulation, clinical/application scientist, product, innovation santé, healthcare consulting, medtech venture capital and Entrepreneur in Residence/EIR/venture builder. Use French and English variants. Prefer postings from the last seven days; no company-size restriction. Inspect the actual vacancy page and current application availability. Exclude search/category pages and closed vacancies. Assess fit against the stored resume, with explicit gaps; retain jobs only above 50% fit.",
+  "eir": "Entrepreneur in Residence / Entrepreneur-in-Residence / EIR / entrepreneur en résidence / venture builder / venture scientist / founder in residence recruitment in healthcare, MedTech, medical imaging, health AI and life sciences. Search actual vacancies AND public founder/investor recruiting posts on LinkedIn, venture studio sites and Welcome to the Jungle. France first, then Europe and India; remote where eligible. Require an explicit current recruiting opportunity and a dated original source; distinguish paid jobs from equity-only founder programmes. Do not treat announcements of someone joining as an open vacancy.",
+  "wttj_jobs": "Welcome to the Jungle job-specific listings in France and Europe for medical imaging, PET/CT, nuclear medicine, biomedical simulation, MedTech R&D, clinical/application science, product, healthcare innovation/consulting, VC analyst/associate and Entrepreneur in Residence. Search French and English synonyms; no company-size restriction. Prefer posts from the last 7 days. Require the individual vacancy URL, current availability and resume-based fit above 50%; never return the general careers/search page as a job.",
+  "collab": "open POSTDOC positions in Europe (EU, Switzerland, UK) in PET/CT, nuclear medicine physics, quantitative imaging, imaging phantoms or imaging digital twins: EURAXESS, university/hospital lab pages, Nature Careers, jobs.ac.uk, academicpositions.eu",
+  "fellowship": "open fellowships (MSCA postdoctoral & COFUND, EMBO, Humboldt, foundation or industry fellowships) for a PET/CT medical-imaging PhD in Europe",
+  "indiv_funding": "grants, microgrants and prizes an INDIVIDUAL researcher can apply for without institutional affiliation (Experiment.com, independent-researcher grants, travel grants, foundation grants) in medical imaging / nuclear medicine / biomedical engineering",
+  "hackathon": "upcoming ONLINE / remote hackathons, datathons and challenges in MedTech, health AI, medical imaging (MICCAI/Grand-Challenge, Kaggle) AND online AI 'vibe coding' / AI-agent build hackathons (lablab.ai, MLH, Devpost, Hugging Face) – remote participation only",
+  "fr_leadership": "POSTES EN FRANCE, annonces rédigées en français : cofondateur / cofondatrice, associé(e) technique ou scientifique, CTO, CSO, directeur scientifique, directeur technique, directeur R&D, responsable R&D, premier ingénieur / founding engineer, dans des startups ou PME de la santé, medtech, dispositifs médicaux, imagerie médicale, médecine nucléaire, radiopharmacie, IA santé ou biotech. Cherche notamment sur Welcome to the Jungle, APEC, LinkedIn (offres publiques), HelloWork, JobTeaser, Station F (HAL), Bpifrance Le Hub, French Tech, incubateurs (Agoranov, PariSanté Campus, Paris Biotech Santé, Eurasanté, Genopole, Incubateur Midi-Pyrénées/Nubbo, Lyon Biopôle) et les annonces de recherche d'associé publiées par des fondateurs. Garde le titre original en français",
+  "analyst": "open analyst roles in MedTech / healthcare: market or competitive-intelligence analyst, MedTech equity-research or investment analyst, healthcare consulting analyst, technology scouting – Europe or remote",
+  "product": "open product roles in medical imaging / nuclear medicine / MedTech: product specialist, clinical or application specialist/scientist, product manager, product owner – Europe or remote, at companies like GE HealthCare, Siemens Healthineers, Philips, United Imaging, Canon, radiopharma firms and imaging-AI startups",
+  "exec": "open CSO, CTO, Chief Scientific/Medical Officer, VP R&D or Head of Imaging roles at MedTech, imaging-AI or radiopharma startups and scale-ups (Europe or remote)",
+  "founding": "startups recruiting a FOUNDING engineer, founding scientist or technical co-founder in MedTech / medical imaging / health AI (YC Work at a Startup, Wellfound, Welcome to the Jungle, EU-Startups, founder posts on LinkedIn/X)",
+  "internship": "open INTERNSHIPS / research stays / traineeships in European countries outside France (Germany, Netherlands, Switzerland, Belgium, Nordics, Spain, Italy, UK) in medical imaging, nuclear medicine, MedTech R&D or health-AI, including industry R&D internships and EU traineeships",
+  "vc": "open jobs in MedTech / life-science venture capital (analyst, associate, venture partner, scout, EIR) in Europe or remote",
+  "startup_funding": "startup and innovation funding calls for an early-stage MedTech / medical imaging venture in France or the EU (Bpifrance, i-Nov, i-Lab, EIC Accelerator/Pathfinder, EIT Health, accelerators, incubators)",
+  "pet_ct": "open industry jobs in PET/CT, molecular imaging or nuclear medicine (application scientist, imaging scientist, physicist, R&D) at GE HealthCare, Siemens Healthineers, Philips, United Imaging, Canon, Novartis/AAA, Curium, ITM, Telix – Europe",
+  "targets": "SPONTANEOUS-APPLICATION TARGETS: European companies, startups and labs (no matching job posted) where this candidate's skills would be valuable – recently funded imaging-AI, radiopharma, MedTech device or simulation companies. Give the careers/contact URL",
+  "conference": "upcoming CONFERENCES in the next 12 months with their ABSTRACT SUBMISSION deadlines: EANM, SNMMI, RSNA, MICCAI, IEEE NSS/MIC, ISMRM, SPIE Medical Imaging, ECR, ESMI/EMIM, PSMR, Fully3D, plus MedTech/health-AI conferences in Europe. Put the abstract deadline in 'deadline' and the event dates + city in 'summary'",
+  "events": "upcoming EVENTS in the next 60 days relevant to a medical-imaging / nuclear-medicine / MedTech job seeker in Europe: free WEBINARS (EANM, SNMMI, ESR, EIT Health, MedTech Europe, company webinars from GE/Siemens/Philips), VIRTUAL and in-person JOB FAIRS and career days (e.g. EURAXESS career events, Forum emploi, Nature Careers Expo, VivaTech, MedTech job fairs, university career fairs in France/EU), meetups and networking events. Put the EVENT date in 'deadline', and type (webinar/job fair/meetup/conference) + online/city in 'summary'",
+  "trends": "WHAT'S HOT this week on LinkedIn and in industry news for PET/CT, nuclear medicine/theranostics, medical-imaging AI and MedTech: trending posts and discussions, viral announcements, hot debates, new regulations, big papers. For each give the topic, why it is trending, a source URL (LinkedIn post/article or news), and a suggested angle for the candidate to post about",
+  "intel": "COMPANY INTELLIGENCE from the last 30 days: funding rounds, acquisitions, new sites/labs, product launches, FDA/CE approvals and hiring announcements at: {companies}. Report hiring signals",
+  "fr_jobs": "OFFRES D'EMPLOI EN FRANCE en français : postes en CDI ou CDD dans l'imagerie médicale, radiophysique, médecine nucléaire, traitement d'images médicales, deep learning imagerie, physique médicale, R&D dispositifs médicaux ou biomédical. Exemples d'intitulés : 'Ingénieur R&D Imagerie Médicale', 'Ingénieur Traitement d'Images', 'Chercheur en Radiophysique', 'Ingénieur Modélisation Biomédicale', 'Data Scientist Imagerie Santé'. Cherche sur APEC, Welcome to the Jungle France, LinkedIn France, JobTeaser, sites carrières (GE HealthCare France, Guerbet, Siemens Healthineers France, Owkin, Gleamer, Therapenacea, Median Technologies, EOS imaging, CEA, Inserm, CNRS). Titres et descriptions en français",
+  "remote_jobs": "FULLY REMOTE or hybrid European jobs open to candidates based in France/EU in medical imaging R&D, health-AI, medical device software, PET/CT simulation, quantitative imaging, or biomedical image analysis. Look on RemoteOK, Remotive, Wellfound remote, EU-Remote, LinkedIn Remote. The location must explicitly indicate 'Remote' or 'Fully Remote' or 'Anywhere in Europe'"
+ },
+ "radar_kinds": {
+  "hellowork_jobs": "job",
+  "eir": "job",
+  "wttj_jobs": "job",
+  "collab": "research",
+  "fellowship": "fellowship",
+  "indiv_funding": "funding",
+  "hackathon": "hackathon",
+  "fr_leadership": "job",
+  "analyst": "job",
+  "product": "job",
+  "exec": "job",
+  "founding": "job",
+  "internship": "internship",
+  "vc": "job",
+  "startup_funding": "startup_funding",
+  "pet_ct": "job",
+  "targets": "target",
+  "conference": "conference",
+  "events": "event",
+  "trends": "trend",
+  "intel": "intel",
+  "fr_jobs": "job",
+  "remote_jobs": "job"
+ },
+ "radar_order": [
+  "hellowork_jobs",
+  "eir",
+  "wttj_jobs",
+  "collab",
+  "fellowship",
+  "indiv_funding",
+  "hackathon",
+  "fr_leadership",
+  "analyst",
+  "product",
+  "exec",
+  "founding",
+  "internship",
+  "vc",
+  "startup_funding",
+  "pet_ct",
+  "targets",
+  "conference",
+  "events",
+  "trends",
+  "intel",
+  "fr_jobs",
+  "remote_jobs"
+ ],
+ "hackathon_queries": [
+  "medical imaging",
+  "health AI",
+  "healthcare",
+  "medtech",
+  "AI agents",
+  "vibe coding"
+ ],
+ "funding_queries": [
+  [
+   "medical imaging",
+   "funding"
+  ],
+  [
+   "nuclear medicine radiopharmaceutical",
+   "funding"
+  ],
+  [
+   "MSCA postdoctoral fellowships",
+   "fellowship"
+  ],
+  [
+   "EIC Accelerator",
+   "startup_funding"
+  ],
+  [
+   "digital twin health",
+   "funding"
+  ],
+  [
+   "cancer imaging diagnosis",
+   "funding"
+  ]
+ ],
+ "collab_topics": [
+  "PET/CT quantification",
+  "imaging phantom 3D printing",
+  "PET simulation digital twin",
+  "nuclear medicine dosimetry",
+  "quantitative SPECT PET harmonization"
+ ],
+ "local_queries": [
+  "imagerie médicale",
+  "médecine nucléaire",
+  "TEP",
+  "physicien médical",
+  "dispositif médical R&D",
+  "ingénieur imagerie",
+  "chercheur imagerie",
+  "ingénieur d'application imagerie",
+  "chef de produit imagerie",
+  "analyste medtech",
+  "jumeau numérique santé",
+  "stage imagerie médicale"
+ ],
+ "leadership_queries": [
+  "CTO medtech",
+  "CSO",
+  "chief scientific officer",
+  "VP R&D",
+  "head of R&D imaging",
+  "directeur scientifique",
+  "directeur technique",
+  "responsable R&D",
+  "cofondateur medtech",
+  "founding engineer medtech",
+  "entrepreneur in residence healthcare",
+  "entrepreneur en résidence santé",
+  "venture builder medtech"
+ ],
+ "intel_companies": [
+  "GE HealthCare",
+  "Siemens Healthineers",
+  "Philips",
+  "United Imaging",
+  "Canon Medical",
+  "Novartis (AAA)",
+  "Curium",
+  "ITM",
+  "Telix",
+  "Lantheus",
+  "Bayer radiopharma",
+  "Orano Med",
+  "Ariceum",
+  "Positron/PET startups",
+  "Therapanacea",
+  "Owkin",
+  "Gleamer",
+  "Raidium"
+ ]
+}
