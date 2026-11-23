@@ -5,6 +5,8 @@ against *your* profile, verifies links, and helps you apply. It runs on your own
 subscriptions you already pay for (Claude, ChatGPT/Codex, Gemini). No API bills, and your CV never leaves your
 machine except in prompts to your own AI accounts.
 
+> **Newer version:** [ANIMUS Career](https://github.com/SaiKiranKumarNalla/animus-career) adds a 3D knowledge graph and a [browser version](https://saikirankumarnalla.github.io/animus-career/) with no install.
+
 > Status: early public version (0.6). macOS and Linux are tested; Windows support is new, so please report issues.
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](#install) [![License](https://img.shields.io/github/license/SaiKiranKumarNalla/animus-jobs)](LICENSE) ![Local-first](https://img.shields.io/badge/data-local--first-success)
