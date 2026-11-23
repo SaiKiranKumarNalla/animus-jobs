@@ -98,6 +98,9 @@ def main(argv=None):
     sub.add_parser("apply-queue", help="list queued/sent application emails")
     sub.add_parser("apply-send", help="send queued application emails now (within the daily limit)")
     apc = sub.add_parser("apply-cancel", help="cancel a queued application email"); apc.add_argument("qid", type=int)
+    lx = sub.add_parser("cv-latex", help="build a LaTeX CV (and PDF if LaTeX is installed), optionally tailored to a job")
+    lx.add_argument("job_id", nargs="?"); lx.add_argument("--language", default="auto"); lx.add_argument("--agent")
+    lx.add_argument("--no-pdf", action="store_true")
     op = sub.add_parser("open", help="start the server if needed and open the dashboard")
     op.add_argument("--port", type=int, default=8765)
     args = p.parse_args(argv)
@@ -107,6 +110,10 @@ def main(argv=None):
         return _setup_wizard()
     if args.cmd == "open":
         return _open(args.port)
+    if args.cmd == "cv-latex":
+        from . import latex_cv
+        print(json.dumps(latex_cv.build(args.job_id, args.language, args.agent, compile=not args.no_pdf), indent=1))
+        return
     if args.cmd.startswith("apply"):
         from . import apply
         if args.cmd == "apply":

@@ -761,6 +761,12 @@ def apply_start(body: dict = Body(...)):
     return ok(apply.start, body["id"], body.get("mode"), body.get("agent"), body.get("to"))
 
 
+@app.post("/api/cv/latex")
+def cv_latex(body: dict = Body(default={})):
+    from . import latex_cv
+    return ok(latex_cv.build, body.get("job_id"), body.get("language", "auto"), body.get("agent"))
+
+
 @app.get("/api/apply/queue")
 def apply_queue():
     from . import apply
