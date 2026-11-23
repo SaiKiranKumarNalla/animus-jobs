@@ -90,7 +90,7 @@ def compile_pdf(tex_path):
     c = compiler()
     if not c:
         return None
-    tex_path = Path(tex_path)
+    tex_path = Path(tex_path).resolve()
     with tempfile.TemporaryDirectory() as tmp:
         if c == "latexmk":
             cmd = ["latexmk", "-pdf", "-interaction=nonstopmode", "-halt-on-error", "-no-shell-escape", f"-outdir={tmp}", str(tex_path)]
